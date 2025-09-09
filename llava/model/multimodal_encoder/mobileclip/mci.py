@@ -1184,8 +1184,8 @@ class AttentionBlock(nn.Module):
 
     def forward(self, x):
         if self.use_layer_scale:
-            x = x + self.drop_path(self.layer_scale_1 * self.token_mixer(self.norm(x)))
-            x = x + self.drop_path(self.layer_scale_2 * self.convffn(x))
+            x = x + self.drop_path(self.layer_scale_1.to(x.device) * self.token_mixer(self.norm(x)))
+            x = x + self.drop_path(self.layer_scale_2.to(x.device) * self.convffn(x))
         else:
             x = x + self.drop_path(self.token_mixer(self.norm(x)))
             x = x + self.drop_path(self.convffn(x))
